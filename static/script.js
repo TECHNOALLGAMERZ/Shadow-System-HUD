@@ -2,6 +2,21 @@ const bgMusic = document.getElementById('bg-music');
 const volSlider = document.getElementById('vol-slider');
 let audioCtx, analyser, dataArray, source;
 
+// --- MONARCH PROTECTION LAYER ---
+// Blocks Right-Click
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+// Blocks Keyboard Shortcuts for Inspect/Source
+document.onkeydown = function(e) {
+    if(e.keyCode == 123 || // F12
+       (e.ctrlKey && e.shiftKey && e.keyCode == 73) || // Ctrl+Shift+I
+       (e.ctrlKey && e.keyCode == 85) || // Ctrl+U (View Source)
+       (e.ctrlKey && e.keyCode == 83)) { // Ctrl+S (Save Page)
+        return false;
+    }
+};
+
+// --- CORE SYSTEM LOGIC ---
 function startVisualizer() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -25,9 +40,10 @@ function drawVisualizer() {
     let x = 0;
     for(let i = 0; i < dataArray.length; i++) {
         let barHeight = dataArray[i] / 4;
-        vCtx.fillStyle = '#00d4ff';
+        vCtx.fillStyle = '#00d4ff'; // Blue visualizer
         vCtx.fillRect(x, vCanvas.height - barHeight, barWidth, barHeight);
         x += barWidth + 2;
+        // Central Box Pulse
         if (dataArray[i] > 200) document.getElementById('ui-window').style.boxShadow = `0 0 50px #00d4ff`;
         else document.getElementById('ui-window').style.boxShadow = `0 0 15px rgba(0, 212, 255, 0.1)`;
     }
@@ -60,8 +76,11 @@ async function triggerLevelUp() {
     }
 }
 
-setInterval(() => { document.getElementById('current-clock').innerText = new Date().toLocaleTimeString('en-GB'); }, 1000);
+setInterval(() => { 
+    document.getElementById('current-clock').innerText = new Date().toLocaleTimeString('en-GB'); 
+}, 1000);
 
+// --- PARTICLE SYSTEM ---
 const canvas = document.getElementById('shadowCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
