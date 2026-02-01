@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHADOW SYSTEM | Monarch Interface</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <canvas id="shadowCanvas"></canvas>
+    
+    <div id="rank-up-overlay" class="hidden">
+        <div class="glitch-text" data-text="LEVEL UP">LEVEL UP</div>
+        <div class="stat-boost-text">ATTRIBUTES INCREASED</div>
+    </div>
+
+    <header class="top-bar">
+        <div class="hud-item player-name">PLAYER: <span>SUNG JIN-WOO</span></div>
+        <div class="hud-item system-status">
+            <span class="status-dot"></span> <span class="status-text">SYSTEM ONLINE</span>
+        </div>
+        <div class="hud-item date-time" id="current-clock">00:00:00</div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="system-box side-panel">
+            <div class="box-header">SOUL MANIFESTATION</div>
+            <div class="box-body">
+                <div class="status-item">EXTRACTED IGRIT</div>
+                <div class="status-item">EXTRACTED TANK</div>
+                <div class="status-msg">Soldiers are awaiting command...</div>
+            </div>
+        </aside>
+
+        <main class="system-box central-window" id="ui-window">
+            <div class="box-header rank-font" id="rank">[E-Rank Hunter]</div>
+            <div class="box-body">
+                <div class="lvl-display">LVL <span id="lvl-display-num">1</span></div>
+                <div class="stats-grid">
+                    <div class="stat-item">STR<br><span id="str-val">10</span></div>
+                    <div class="stat-item">AGI<br><span id="agi-val">10</span></div>
+                    <div class="stat-item">INT<br><span id="int-val">10</span></div>
+                </div>
+                <div class="xp-wrapper">
+                    <div id="xp-bar" class="progress-fill"></div>
+                </div>
+                <button class="level-up-btn" onclick="triggerLevelUp()">LEVEL UP</button>
+            </div>
+        </main>
+
+        <aside class="system-box side-panel">
+            <div class="box-header">EQUIPMENT</div>
+            <div class="box-body">
+                <div class="inv-grid">
+                    <div class="inv-slot">S</div>
+                    <div class="inv-slot">A+</div>
+                    <div class="inv-slot">B</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="audio-hud">
+        <canvas id="visualizer" width="120" height="40"></canvas>
+        <div class="vol-controls">
+            <span id="bgm-label">BGM: OFF</span>
+            <input type="range" id="vol-slider" min="0" max="1" step="0.1" value="0.5" oninput="adjustVolume()">
+        </div>
+        <button class="music-toggle" onclick="toggleMusic()">🔊</button>
+    </div>
+
+    <audio id="bg-music" loop src="{{ url_for('static', filename='system-theme.mp3') }}"></audio>
+    <audio id="level-up-sound" src="{{ url_for('static', filename='level-up-custom.mp3') }}"></audio>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
